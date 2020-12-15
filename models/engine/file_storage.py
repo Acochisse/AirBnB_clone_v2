@@ -14,7 +14,6 @@ class FileStorage:
             return FileStorage.__objects
         new_dict = {}
         for k, v in self.__objects.items():
-            print("cls: {} | k: {}".format(cls, k.split(".")[0]))
             if cls.__name__ == k.split(".")[0]:
                 new_dict[k] = v
         return new_dict
