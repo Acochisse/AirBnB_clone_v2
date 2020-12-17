@@ -6,7 +6,15 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 
-class Place(BaseModel):
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60), ForeignKey("places.id"),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey("amenities.id"),
+                             primary_key=True, nullable=False))
+
+
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
 
@@ -22,6 +30,32 @@ class Place(BaseModel):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            """returns list of reviews for a place"""
+            result = []
+            for i in models.storage.all(Review).values():
+                if i.place_id == self.id:
+                    result.append(i)
+            return result
+
+        @property
+        def amenities(self):
+            """returns list of amenities in place"""
+            result = []
+            for i in models.storage.all(Amenity).values():
+                if i.place_id == self.id:
+                    result.append(i)
+            return result
+
+        @amenities.setter
+        def amenities(self, am=None):
+            """sets new amenity to place"""
+            if am:
+                for i in models.storage.all(Amenity).values():
+                    if i.place_id == self.id:
+                        amenity_ids.append(amenity)
     else:
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
@@ -33,3 +67,8 @@ class Place(BaseModel):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete, delete-orphan")
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False,
+                                 back_populates="place_amenities")
