@@ -19,22 +19,26 @@ from sqlalchemy.orm import sessionmaker
 class test_DBStorage(unittest.TestCase):
 
     def testUser(self):
+        """tests username entry"""
         user = User(name="Case")
         if user.id in models.storage.all():
             self.assertTrue(user.name, "Case")
 
 
     def testState(self):
+        """testing new state entry"""
         state = State(name="Chiba")
         if state.id in models.storage.all():
             self.assertTrue(state.name, "Chiba")
 
     def testCity(self):
+        """testing new city entry"""
         city = City(name="Night City")
         if city.id in models.storage.all():
             self.assertTrue(city.name, "Night City")
 
     def testPlace(self):
+        """testing new place entry"""
         place = Place(name="Cheap Hotel", number_rooms=5)
         if place.id in models.storage.all():
             self.assertTrue(place.number_rooms, 5)
@@ -42,15 +46,18 @@ class test_DBStorage(unittest.TestCase):
 
 
     def testAmenity(self):
+        """testing new Amenity entry"""
         amenity = Amenity(name="2 Bath")
         if amenity.id in models.storage.all():
             self.assertTrue(amenity.name, "2 Bath")
 
     def testReview(self):
+        """testing new review entry"""
         review = Review(text="Bombed out foxhole on mars")
         if review.id in models.storage.all():
             self.assertTrue(review.text, "Bombed out foxhole on mars")
 
     def teardown(self):
+        """ends session"""
         self.session.close()
         self.session.rollback()
