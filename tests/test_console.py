@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""UnitTests for the console"""
+"""
+UnitTest Module for the console
+"""
 
 import os
 import sys
@@ -10,44 +12,51 @@ from console import HBNBCommand
 from unittest.mock import create_autospec
 import os
 
-
-class test_console(unittest.TestCase):
-    """UnitTest for console module"""
-
-    def test_quit(self):
-        """Test quit exists"""
-        console = self.create()
+    def test_do_quit(self):
+    	"""Test quit exists"""
+    	console = self.create()
         self.assertTrue(console.onecmd("quit"))
 
-    def test_EOF(self):
-        """"Test EOF exists"""
-        console = self.create()
+def test_do_EOF(self):
+        """Test EOF exists"""
+    	console = self.create()
         self.assertTrue(console.onecmd("EOF"))
 
-    def create(self):
-        """Tests create an instance of the HBNBCommand"""
-        return HBNBCommand()
+“””def emptyline(self):”””
+    def do_create(self):
+    	"""Test do_create"""
+    	return HBNBCommand()
 
-    def test_show(self):
-        """ Test that show exists """
-        console = self.create()
+    def test_do_show(self):
+    	"""Testing that show exists"""
+    	console = self.create()
         console.onecmd("create User")
-        user_id = self.capt_out.getvalue()
-        sys.stdout = self.backup
+    	user_id = self.capt_out.getvalue()
+    	sys.stdout = self.backup
         self.capt_out.close()
-        self.capt_out = StringIO()
-        sys.stdout = self.capt_out
+    	self.capt_out = StringIO()
+    	sys.stdout = self.capt_out
         console.onecmd("show User " + user_id)
-        x = (self.capt_out.getvalue())
-        sys.stdout = self.backup
+    	x = (self.capt_out.getvalue())
+    	sys.stdout = self.backup
         self.assertTrue(isinstance(x, str))
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+    	"won't work in db")
 
-    def test_destroy(self):
-        """tests destroy"""
-        console = self.create()
+    def test_do_destroy(self):
+        """Test do_destroy"""
+    	console = self.create()
         self.assertTrue(console.onecmd("destroy"))
 
-    def test_update(self):
-        """tests update"""
-        console = self.create()
+    def test_do_all(self):
+    	"""Test all exists"""
+    	console = self.create()
+        console.onecmd("all")
+        self.assertTrue(isinstance(self.capt_out.getvalue(), str))
+
+“””def do_count(self, args):”””
+    def test_do_update(self):
+        """Test do_update"""
+    	console = self.create()
         self.assertTrue(console.onecmd("update"))
