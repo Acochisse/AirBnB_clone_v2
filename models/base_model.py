@@ -4,6 +4,8 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+import models
+from os import getenv
 
 
 Base = declarative_base()
@@ -33,7 +35,7 @@ class BaseModel:
                                                          '%Y-%m-%dT%H:%M:%S.%f')
             else:
                 self.created_at = datetime.now()
-            del kwargs['__class__']
+            # del kwargs['__class__']
             for k, v in kwargs.items():
                 setattr(self, k, v)
             if not self.id:
