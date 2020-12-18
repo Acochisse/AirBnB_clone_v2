@@ -17,12 +17,11 @@ import os
     	console = self.create()
         self.assertTrue(console.onecmd("quit"))
 
-def test_do_EOF(self):
+        def test_do_EOF(self):
         """Test EOF exists"""
     	console = self.create()
         self.assertTrue(console.onecmd("EOF"))
 
-“””def emptyline(self):”””
     def do_create(self):
     	"""Test do_create"""
     	return HBNBCommand()
@@ -55,7 +54,6 @@ def test_do_EOF(self):
         console.onecmd("all")
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
-“””def do_count(self, args):”””
     def test_do_update(self):
         """Test do_update"""
     	console = self.create()
