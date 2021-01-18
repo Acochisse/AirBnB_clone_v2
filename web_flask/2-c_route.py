@@ -16,7 +16,7 @@ def hbnb():
     """ prints "HBNB" """
     return 'HBNB'
 
-@app.route('/c/<text>'/, strict_slashes=False)
+@app.route('/c/<text>', strict_slashes=False)
 def cisfun(text):
     """displays "C" followed by the value of the text var"""
     return 'C ' + text.replace('_', ' ')
