@@ -4,7 +4,6 @@ Module that starts Flask
 """
 from flask import Flask, render_template
 from models import storage
-from models import *
 app = flask(__name__)
 
 
