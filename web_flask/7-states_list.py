@@ -2,9 +2,10 @@
 """
 Module that starts Flask
 """
+import os
+import sys
 import models
 from flask import Flask, render_template
-from models import storage
 app = flask(__name__)
 
 
